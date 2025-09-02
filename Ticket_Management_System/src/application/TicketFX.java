@@ -1,6 +1,8 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -17,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class TicketFX extends Application {
@@ -30,7 +33,7 @@ public class TicketFX extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,225);
+			Scene scene = new Scene(root,400,250);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			scene.setRoot(login(scene));
 			primaryStage.setScene(scene);
@@ -92,10 +95,36 @@ public class TicketFX extends Application {
 		userRBtn.setTranslateX(210);
 		userRBtn.setTranslateY(150);
 		
+		Text errorMsg = new Text();
+		errorMsg.setFill(Color.RED);
+		errorMsg.setX(100);
+		errorMsg.setY(230);
+		errorMsg.setVisible(false);
+		
 		//Button used to login to application
 		Button loginBtn = new Button("Login");
 		loginBtn.setTranslateX(170);
 		loginBtn.setTranslateY(180);
+		
+		//Action of the login button
+		loginBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				//what happens when admin button is selected
+				if(adminRBtn.isSelected()) {
+					
+				}
+				//what happens when user button is selected
+				else if(userRBtn.isSelected()) {
+					
+				}
+				//what happens when neither button is selected
+				else if(!adminRBtn.isSelected() && !userRBtn.isSelected()) {
+					errorMsg.setText("Please select the admin or user button");
+					errorMsg.setVisible(true);
+				}
+			}
+		});
 		
 		Pane loginPane = new Pane();
 		
@@ -103,7 +132,7 @@ public class TicketFX extends Application {
 		Background background = new Background(background_fill);
 		loginPane.setBackground(background);
 		
-		loginPane.getChildren().addAll(title,line,loginLbl,userNameLbl,userNameTxtF,passWrdLbl,passWrdTxtF,adminRBtn,userRBtn,loginBtn);
+		loginPane.getChildren().addAll(title,line,loginLbl,userNameLbl,userNameTxtF,passWrdLbl,passWrdTxtF,adminRBtn,userRBtn,loginBtn,errorMsg);
 		return loginPane;
 	}
 	
